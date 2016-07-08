@@ -1,13 +1,12 @@
-//the network code of the server
+//network code for Mac
 
 //code by Hechen Hu in July 3,2016
 //edited by HF XetRA
 //All Rights Reserved to The XetRA Enterprize
 #include<iostream>
-#include<winsock2.h>
+#include<netinet/in.h>
 #include<stdio.h>
-#include <stdlib.h> 
-#include<windows.h>
+#include <stdlib.h>
 #pragma comment(lib, "ws2_32.lib")  
   
 using namespace std;
@@ -30,16 +29,8 @@ class SERVER
 		int Init_Winsock_Lib()
 		{
 			WSADATA WsaData;
-			while(WSAStartup(Version,&WsaData)!=0)
-			{
-				cout<<"错误代码:"<<WSAGetLastError()<<endl<<"请尝试其他WSA版本号"<<endl    
-				<<endl<<"请输入副版本号"<<endl;
-				cin>>MinorVersionNumber;
-				cout<<"请输入主版本号"<<endl;
-				cin>>MinorVersionNumber;
-				Version = MAKEWORD(MinorVersionNumber,MajorVersionNumber);
-				cout<<"正在重试初始化winsock"<<endl;
-			}	    
+			WSAStartup(Version,&WsaData)!=0
+			
 		}
 		
 		void Init_Socket()
