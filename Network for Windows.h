@@ -1,8 +1,4 @@
-//the network code of the server
-
-//code by Hechen Hu in July 3,2016
-//edited by HF XetRA
-//All Rights Reserved to The XetRA Enterprize
+// Coded by Hechen Hu in July 9,2016
 #include<iostream>
 #include<winsock2.h>
 #include<stdio.h>
