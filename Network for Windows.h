@@ -9,13 +9,11 @@
 #include <stdlib.h> 
 #include<windows.h>
 #pragma comment(lib, "ws2_32.lib")  
-  
-using namespace std;
-class SERVER
+class NETWORK
 {
 	private:
+
 		const int Port;
-		int Type = SOCK_STREAM,Protocol = IPPROTO_TCP;
 		WORD Version = MAKEWORD(2,2);
 		SOCKET SockServ;
 		SOCKET SockConn;   
@@ -23,36 +21,18 @@ class SERVER
 		int    AddrLen = sizeof(SOCKADDR_IN);
 		SOCKADDR_IN AddrOfServer;         
 	public:		
-		int Init_Winsock_Lib()
+		const NETWORK()
 		{
 			WSADATA WsaData;
-			return WSAStartup(Version,&WsaData);
-			
+			WSAStartup(Version,&WsaData);
+			SockServ = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+            AddrOfServer.sin_family = AF_INET;//using TCP/IP protocol family;
+            AddrOfServer.sin_port = htons(Port);//IP Address
+            AddrOfServer.sin_addr.S_un.S_addr = htonl(INADDR_ANY); 
+            bind(SockServ,(SOCKADDR*)&AddrOfServer,sizeof(SOCKADDR));
+            listen(SockServ,5)
 		}
-		
-		SOCKET Init_Socket(int type,int protocol)
-		{
-            SockServ = socket(AF_INET,Type, Protocol);
-			return SockServ;
-		
-		}  
-       
-	    int InitAddrAndBind(int Port)
-        { 
-			    AddrOfServer.sin_family = AF_INET;//using TCP/IP protocol family;
-                AddrOfServer.sin_port = htons(Port);//IP Address
-                AddrOfServer.sin_addr.S_un.S_addr = htonl(INADDR_ANY); 
-                return bind(SockServ,(SOCKADDR*)&AddrOfServer,sizeof(SOCKADDR));
-			   
-		} 
-			
-		void ListenUsingSocket(int BackLog)
-		{
-			return listen(SockServ,BackLog);
-			
-		}
-		
-	
+
 		DWORD WINAPI THREADFUNCReceiveMsg()
 		{
 			 while (accept(SockServ,(SOCKADDR*)&AddrOfClient,&AddrLen))
@@ -68,9 +48,9 @@ class SERVER
 			
 		   }
        } 
-       DWORD WINAPI SendMsg(char* Msg) 
+       DWORD WINAPI THREADFUNCSendMsg(char* Msg) 
        {
-       	return send(SockConn,Msg,strlen(Msg)+1,0);
+       	 send(SockConn,Msg,strlen(Msg)+1,0);
 	   }
 	  ~SERVER()
 	   {
