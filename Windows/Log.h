@@ -34,7 +34,7 @@ class LogManager
       		LogFile[*(ThreadManager.TEMPIter).first.ThreadName] = FileHandle ;
       	}
       }
-      DWORD WINAPI WriteLogFile(const class CLASSLOGDATA)//Use This Function to Write Log Data.OverWrite it in Each Class
+      DWORD WINAPI WriteLogFile(const class CLASSLOGDATA)//Use This Function to Write Log Data.Using The Parameter to know which Class Wants to Write its Log Data
       {
        ofstream OFileStream(LogFileHandle[CLASSLOGDATA.Name].first.FileControlBlock[LogFileHandle[CLASSLOGDATA.Name].fd],ios::app） ;
        OFileStream<<"RunCount:"<<CLASSLOGDATA.RunCount<</*The Data You Want To Store*/<<endl;
