@@ -7,41 +7,56 @@ using std::map ;
 struct PATH
 {
 	char PathName [] ; 
-	WayPoint *NodeOne ;//Point At The First Node Connected With This Side
-	WayPoint *NodeTwo ;//Point At The Next Node Connected With This Side
+	NODEPOINT *NodeOne ;//Point At The First Node Connected With This Side
+	NODEPOINT *NodeTwo ;//Point At The Next Node Connected With This Side
 	int Cost ; 
 };
-struct WAYPOINT
+struct NODEPOINT
 {
 	char* NodeName ;
 	int BranchNum ;
 	int weight ;
-	Location Where ; 
+	Location WhereIsThisPoint ; 
+	int NodeType ;
 };
-struct LOCATION
+struct COORDINATE
 {
 	int x,y，z;
+	&COORDINATE operator == (&COORDINATE A,&COORDINATE B)
+	{
+		if(A.x == B.x && A.y == B.y && A.z == B.z)
+			return true ;
+	}
 };
 struct MAP
 {
     map<int,WayPoint > Point;
     map<int,Path> Side;
-
 };
-struct ROUTE
+struct ROUTEPOINT
 {
-
+    WAYPOINT Node ;
+    WAYPOINT *Next ;
 };
-class MapDataManager
+class MapManager
 {
     private:
             MAP MapData ;
-            LOCATION CurrLocation ;
+            COORDINATE CurrLocation ;
     public:
-            MAP ReadMapData(FILE* FileHandle)
-            {
+           ROUTEPOINT FindRoute(char Algorithm[],NODEPOINT Destination)//Find Route According to The Sum Of Node And Choose The Algorithm
+           	{
+           		  static COORDINATE Direction ;
+                  while(CurrLocation != Destination)
+                  if(CurrLocation.z == Destination.z)
+                  {
+                        
+                  }
+                  else if(CurrLocation.z != Destination.z)
+                  {
 
-            }        
-
+                  }
+           	}      
+            
 
 };
